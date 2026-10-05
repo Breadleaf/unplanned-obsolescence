@@ -1,0 +1,5 @@
+# https://github.com/github/gitignore/blob/main/community/FreeCAD.gitignore
+*.FC.lock
+*.bak
+*.FCBak
+*.tmp
