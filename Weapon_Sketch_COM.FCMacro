@@ -1,0 +1,37 @@
+import FreeCAD as App
+import sys
+
+doc = App.ActiveDocument
+
+gobl = lambda label: doc.getObjectsByLabel(label)
+
+body = "body_Weapon"
+vertex = "CenterOfMass_Vertex"
+
+if doc is None:
+    print("Please open a FreeCAD document")
+    sys.exit(1)
+
+if (found_objects := gobl(body)):
+    volume = found_objects[0]
+else:
+    print(f"Error: No object with label: '{body}' was found.")
+    sys.exit(1)
+
+vertex = (found_objects[0] if (found_objects := gobl(vertex)) else doc.addObject("Part::Vertex", vertex))
+# ensure vertex is using same coordinates
+part = volume.getParentGeoFeatureGroup()
+if part is not None and vertex not in part.Group:
+    part.addObject(vertex)
+
+try:
+    solids = volume.Shape.Solids
+    if len(solids) != 1:
+        raise ValueError(f"expected 1 solid, found {len(solids)}")
+           
+    com = solids[0].CenterOfMass
+    vertex.X, vertex.Y, vertex.Z = com
+    doc.recompute()
+    print(f"All good! COM = {com}")
+except Exception as e:
+    print(f"{type(e).__name__}: {e}")
