@@ -2,6 +2,9 @@
 
 My first combat robot! Plastic Antweight Division :)
 
+***YOU NEED TO INSTALL THE ADDON `freecad.gears.workb` BEFORE USE***
+[How to install a FreeCAD addon](https://wiki.freecad.org/How_to_install_additional_workbenches)
+
 `Weapon_Sketch_COM.FCMacro` to be added to macros in freecad.
 To use it, you must have an active document, and active body.
 The body must have the name "body_Weapon". Finally, run the script.
